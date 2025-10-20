@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@/apis/apiEndpoints";
 import api from "@/services/apiService";
-import { getToken, removeToken, setToken } from "@/utils/storageUtils";
+import { clearChatHistory, getToken, removeToken, setToken } from "@/utils/storageUtils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -39,6 +39,7 @@ export default function useAuth() {
 
     const logout = () => {
         removeToken();
+        clearChatHistory();
         setIsAuthenticated(false);
         router.push('/login');
         toast.success('Logged out successfully!');
