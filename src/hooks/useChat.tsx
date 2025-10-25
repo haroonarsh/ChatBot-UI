@@ -1,8 +1,9 @@
 import { API_ENDPOINTS } from "@/apis/apiEndpoints";
 import api from "@/services/apiService";
-import { getChatHistory, setChatHistory } from "@/utils/storageUtils";
+import { clearChatHistory, getChatHistory, getToken, setChatHistory } from "@/utils/storageUtils";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useChats } from "./useChats";
 
 interface Message {
   content: string;
@@ -10,25 +11,45 @@ interface Message {
 }
 
 export default function useChat() {
+  const { currentSessionId } = useChats();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const history = getChatHistory();
-    if (history) setMessages(history);
-  }, []);
+    if (currentSessionId) {
+      setMessages([]);
+      fetchMessages(currentSessionId);
+    } else {
+      setMessages([]);
+    }
+  }, [currentSessionId]);
+
+  const fetchMessages = async (sessionId: string) => {
+    try {
+      const res = await api.get(API_ENDPOINTS.CHAT_SESSION.replace(':sessionId', sessionId));
+      const history: Message[] = res.data.messages.map((msg: any) => ({
+        content: msg.content,
+        role: msg.role as 'user' | 'assistant',
+      }));
+      setMessages(history);
+    } catch (error) {
+      toast.error('Error loading messages');
+    }
+  };
 
   const sendMessage = async (message: string) => {
+    if (!currentSessionId) {
+      toast.error('No active chat session');
+      return;
+    }
     const userMessage: Message = { content: message, role: 'user' };
     setMessages(prev => [...prev, userMessage]);
-    setChatHistory([...messages, userMessage]); // Update storage
     setLoading(true);
 
     try {
-      const res = await api.post(API_ENDPOINTS.CHAT_SEND, { message });
+      const res = await api.post(API_ENDPOINTS.CHAT_SEND, { message, sessionId: currentSessionId });
       const botMessage: Message = { content: res.data.response, role: 'assistant' };
       setMessages((prev) => [...prev, botMessage]);
-      setChatHistory([...messages, userMessage, botMessage]); // Update storage
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'An error occurred while sending the message');
     } finally {
@@ -38,8 +59,7 @@ export default function useChat() {
 
   const clearChat = () => {
     setMessages([]);
-    setChatHistory([]); // Clear storage
-    toast.success('Chat history cleared');
+    toast.success('Chat cleared');
   };
 
   return { messages, sendMessage, loading, clearChat };
