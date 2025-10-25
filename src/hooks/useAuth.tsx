@@ -23,6 +23,8 @@ export default function useAuth() {
         try {
             const res = await api.post(endpoint, data);
             setToken(res.data.token);
+            console.log("Tok:", res.data.token);
+            
             setIsAuthenticated(true);
             toast.success('Authentication successful!');
             router.push('/chat');
