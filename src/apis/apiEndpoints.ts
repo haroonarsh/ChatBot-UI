@@ -6,5 +6,5 @@ export const API_ENDPOINTS = {
     CHAT_HISTORY: '/api/chat/history',
     CHAT_NEW: '/api/chat/new',
     CHAT_SESSIONS: '/api/chat/sessions',
-    CHAT_SESSION: '/api/chat/:sessionId',
+    CHAT_SESSION: '/api/chat/session/:sessionId',
 } as const;
