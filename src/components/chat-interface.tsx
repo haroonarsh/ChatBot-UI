@@ -49,12 +49,12 @@ export function ChatInterface({ messages, sendMessage, loading }: ChatInterfaceP
   return (
     <div className="flex flex-col h-full bg-transparent overflow-hidden">
       {messages.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-full text-center space-y-8 p-8">
+        <div className="flex flex-col items-center justify-center h-full text-center space-y-8 p-2 md:p-8">
           <div className="flex items-center gap-3">
             <div className="bg-primary rounded-full p-3">
-              <Bot className="h-8 w-8 text-primary-foreground" />
+              <Bot className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground" />
             </div>
-            <h1 className="text-4xl font-bold text-foreground">Grok</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground">Grok</h1>
           </div>
 
           <div className="w-full max-w-3xl space-y-4">
@@ -66,31 +66,31 @@ export function ChatInterface({ messages, sendMessage, loading }: ChatInterfaceP
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="What do you want to know?"
                 disabled={loading}
-                className="w-full h-14 pl-4 pr-20 text-base bg-background border-border rounded-xl shadow-sm"
+                className="w-full h-12 md:h-14 pl-1 md:pl-4 pr-20 text-sm md:text-base bg-background border-border rounded-xl shadow-sm"
                 autoFocus
               />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0 md:gap-2">
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+                  className="h-5 w-5 md:h-8 md:w-8 p-0 text-muted-foreground hover:text-foreground"
                 >
-                  <Paperclip className="h-4 w-4" />
+                  <Paperclip className="h-3 w-3 md:h-4 md:w-4" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 px-3 text-sm font-medium text-muted-foreground hover:text-foreground"
+                  className="h-5 px-2 md:h-8 md:px-3 text-sm font-medium text-muted-foreground hover:text-foreground"
                 >
-                  <Zap className="h-3 w-3 mr-1" />
+                  <Zap className="h-2 w-2 md:h-3 md:w-3 mr-1" />
                   Fast
                 </Button>
                 <Button
                   type="submit"
                   disabled={!input.trim() || loading}
                   size="sm"
-                  className="h-8 w-8 p-0 bg-primary hover:bg-primary/90 rounded-full"
+                  className="h-7 w-7 md:h-8 md:w-8 p-0 bg-primary hover:bg-primary/90 rounded-full"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                 </Button>
@@ -119,7 +119,7 @@ export function ChatInterface({ messages, sendMessage, loading }: ChatInterfaceP
             </div>
           </header> */}
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar py-6 px-16 space-y-6">
+          <div className="flex-1 overflow-y-auto custom-scrollbar py-6 px-3 md:px-16 space-y-6">
             {messages.map((message) => (
               <div
                 key={message.id}
