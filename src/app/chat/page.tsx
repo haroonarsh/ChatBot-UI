@@ -7,24 +7,20 @@ import { MenuButton } from "@/components/menu-button"
 import { useRouter } from "next/navigation"
 import useAuth from "@/hooks/useAuth"
 import useChat from "@/hooks/useChat"
+import { useChats } from "@/hooks/useChats"
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const { currentSessionId, createNewSession } = useChats();
   const { messages, sendMessage, loading } = useChat();
 
-  // useEffect(() => {
-  //   console.log("Authentication status:", isAuthenticated);
-    
-  //   if (!isAuthenticated) {
-  //     router.push('/login');
-  //   }
-  // }, [isAuthenticated, router]);
-
-  // if (!isAuthenticated) {
-  //   return <div className="min-h-screen flex items-center justify-center">Redirecting...</div>;
-  // }
+  useEffect(() => {
+    if (!currentSessionId) {
+      createNewSession();
+    }
+  }, [currentSessionId, createNewSession]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
