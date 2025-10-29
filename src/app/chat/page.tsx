@@ -10,9 +10,7 @@ import useChat from "@/hooks/useChat"
 import { useChats } from "@/hooks/useChats"
 
 export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { currentSessionId, createNewSession } = useChats();
   const { messages, sendMessage, loading } = useChat();
 
