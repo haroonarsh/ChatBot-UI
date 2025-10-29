@@ -4,8 +4,6 @@ import { useEffect, useState } from "react"
 import { ChatInterface } from "@/components/chat-interface"
 import { Sidebar } from "@/components/sidebar"
 import { MenuButton } from "@/components/menu-button"
-import { useRouter } from "next/navigation"
-import useAuth from "@/hooks/useAuth"
 import useChat from "@/hooks/useChat"
 import { useChats } from "@/hooks/useChats"
 

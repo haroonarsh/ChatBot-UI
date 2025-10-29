@@ -13,11 +13,9 @@ import Link from "next/link"
 interface AuthFormProps {
   onSubmit: (data: { name: string; email: string; password: string; }) => void;
   loading: boolean;
-  error: string | null;
-  isRegister: boolean;
 }
 
-export default function AuthForm({ onSubmit, loading, error, isRegister }: AuthFormProps) {
+export default function AuthForm({ onSubmit, loading }: AuthFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({

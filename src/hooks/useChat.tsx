@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@/apis/apiEndpoints";
 import api from "@/services/apiService";
-import { clearChatHistory, getChatHistory, getToken, setChatHistory } from "@/utils/storageUtils";
+// import { clearChatHistory, getChatHistory, getToken, setChatHistory } from "@/utils/storageUtils";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useChats } from "./useChats";
@@ -32,7 +32,7 @@ export default function useChat() {
         role: msg.role as 'user' | 'assistant',
       }));
       setMessages(history);
-    } catch (error) {
+    } catch (error: any) {
       toast.error('Error loading messages');
     }
   };

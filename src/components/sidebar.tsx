@@ -3,7 +3,7 @@
 import { useChats } from "@/hooks/useChats"
 import { useTheme } from "./theme-provider"
 import { Button } from "./ui/button"
-import { Moon, Sun, MessageSquare, Settings, History, Trash2, DoorOpen, LogOut } from "lucide-react"
+import { Moon, Sun, MessageSquare, Settings, History, Trash2, LogOut } from "lucide-react"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import useChat from "@/hooks/useChat"

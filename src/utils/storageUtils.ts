@@ -3,7 +3,7 @@ import { getCookie, setCookie, deleteCookie } from "cookies-next"
 export const getToken = (): string | undefined => {
     try {
         return getCookie('token') as string | undefined;
-    } catch (error) {
+    } catch (error: any) {
         return undefined;
     }
 };
@@ -16,7 +16,7 @@ export const setToken = (token: string): void => {
             sameSite: 'lax', // send cookie both same-site and cross-site requests
             secure: process.env.NODE_ENV === 'development',
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error setting token cookie:', error);
     }
 };
@@ -24,7 +24,7 @@ export const setToken = (token: string): void => {
 export const removeToken = (): void => {
     try {
         deleteCookie('token');
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error deleting token cookie:', error);
     }
 };
@@ -33,7 +33,7 @@ export const getChatHistory = (): { content: string; role: 'user' | 'assistant' 
     try {
         const history = getCookie('chatHistory') as string | undefined;
         return history ? JSON.parse(history) : null;
-    } catch (error) {
+    } catch (error: any) {
         return null;
     }
 };
@@ -46,7 +46,7 @@ export const setChatHistory = (history: { content: string; role: 'user' | 'assis
             sameSite: 'lax', // send cookie both same-site and cross-site requests
             secure: process.env.NODE_ENV === 'development',
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error setting chat history cookie:', error);
     }
 };
@@ -54,7 +54,7 @@ export const setChatHistory = (history: { content: string; role: 'user' | 'assis
 export const clearChatHistory = (): void => {
     try {
         deleteCookie('chatHistory');
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error deleting chat history cookie:', error);
     }
 };
