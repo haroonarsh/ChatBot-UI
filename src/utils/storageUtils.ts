@@ -3,7 +3,7 @@ import { getCookie, setCookie, deleteCookie } from "cookies-next"
 export const getToken = (): string | undefined => {
     try {
         return getCookie('token') as string | undefined;
-    } catch (error: any) {
+    } catch (error) {
         return undefined;
     }
 };
@@ -33,7 +33,7 @@ export const getChatHistory = (): { content: string; role: 'user' | 'assistant' 
     try {
         const history = getCookie('chatHistory') as string | undefined;
         return history ? JSON.parse(history) : null;
-    } catch (error: any) {
+    } catch (error) {
         return null;
     }
 };
