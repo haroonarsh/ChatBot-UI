@@ -34,10 +34,11 @@ export async function middleware(request: NextRequest) {
       // Verify token (optional: decode and check expiry)
       await jwtVerify(token, new TextEncoder().encode(JWT_SECRET));
       return NextResponse.next();
-    } catch (error) {
+    } catch (error: any) {
       // Invalid token: clear cookie and redirect
       const response = NextResponse.redirect(new URL('/login', request.url));
       response.cookies.delete('token');
+      console.error('JWT verification failed:', error);
       return response;
     }
   }

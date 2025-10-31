@@ -32,7 +32,8 @@ export default function useChat() {
         role: msg.role as 'user' | 'assistant',
       }));
       setMessages(history);
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error fetching messages:', error);
       toast.error('Error loading messages');
     }
   };
