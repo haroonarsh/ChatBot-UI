@@ -24,7 +24,7 @@ export const useChats = create<ChatStore>((set, get) => ({
         try {
             const res = await api.get(API_ENDPOINTS.CHAT_SESSIONS);
             set({ sessions: res.data.sessions });
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error fetching sessions:', error);
             toast.error('Failed to fetch sessions');
         }
@@ -36,7 +36,7 @@ export const useChats = create<ChatStore>((set, get) => ({
             set({ currentSessionId: newId });
             await get().fetchSessions(); // Refetch list
             toast.success('New chat started');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error creating new session:', error);
             toast.error('Error creating session');
         }

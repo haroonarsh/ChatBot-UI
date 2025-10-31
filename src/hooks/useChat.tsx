@@ -32,7 +32,7 @@ export default function useChat() {
         role: msg.role as 'user' | 'assistant',
       }));
       setMessages(history);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching messages:', error);
       toast.error('Error loading messages');
     }
@@ -51,7 +51,7 @@ export default function useChat() {
       const res = await api.post(API_ENDPOINTS.CHAT_SEND, { message, sessionId: currentSessionId });
       const botMessage: Message = { content: res.data.response, role: 'assistant' };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error: any) {
+    } catch (error: unknown | any) {
       toast.error(error.response?.data?.message || 'An error occurred while sending the message');
     } finally {
       setLoading(false);

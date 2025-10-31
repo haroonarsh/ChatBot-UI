@@ -28,7 +28,7 @@ export default function useAuth() {
             setIsAuthenticated(true);
             toast.success('Authentication successful!');
             router.push('/chat');
-        } catch (error: any) {
+        } catch (error: unknown | any) {
             setError(error.response?.data?.message || 'An error occurred');
             toast.error(error.response?.data?.message || 'An error occurred');
         } finally {
