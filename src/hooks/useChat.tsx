@@ -4,8 +4,15 @@ import api from "@/services/apiService";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useChats } from "./useChats";
+import { AxiosError } from "axios";
 
 interface Message {
+  content: string;
+  role: 'user' | 'assistant';
+}
+
+// Define a type for backend message to avoid 'any'
+interface BackendMessage {
   content: string;
   role: 'user' | 'assistant';
 }
@@ -27,7 +34,7 @@ export default function useChat() {
   const fetchMessages = async (sessionId: string) => {
     try {
       const res = await api.get(API_ENDPOINTS.CHAT_SESSION.replace(':sessionId', sessionId));
-      const history: Message[] = res.data.messages.map((msg: any) => ({
+      const history: Message[] = res.data.messages.map((msg: BackendMessage) => ({
         content: msg.content,
         role: msg.role as 'user' | 'assistant',
       }));
@@ -51,8 +58,11 @@ export default function useChat() {
       const res = await api.post(API_ENDPOINTS.CHAT_SEND, { message, sessionId: currentSessionId });
       const botMessage: Message = { content: res.data.response, role: 'assistant' };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error: unknown | any) {
-      toast.error(error.response?.data?.message || 'An error occurred while sending the message');
+    } catch (error: unknown) {
+      console.error('Error sending message:', error);  // Log to "use" the variable and debug
+            const axiosError = error as AxiosError;  // Cast to AxiosError for safe access
+            const errorMessage = (axiosError.response?.data as { message?: string })?.message  || 'An error occurred';
+            toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

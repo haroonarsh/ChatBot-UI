@@ -1,6 +1,7 @@
 import { API_ENDPOINTS } from "@/apis/apiEndpoints";
 import api from "@/services/apiService";
 import { clearChatHistory, getToken, removeToken, setToken } from "@/utils/storageUtils";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -28,9 +29,12 @@ export default function useAuth() {
             setIsAuthenticated(true);
             toast.success('Authentication successful!');
             router.push('/chat');
-        } catch (error: unknown | any) {
-            setError(error.response?.data?.message || 'An error occurred');
-            toast.error(error.response?.data?.message || 'An error occurred');
+        } catch (error: unknown) {
+            console.error('Auth request error:', error);  // Log to "use" the variable and debug
+            const axiosError = error as AxiosError;  // Cast to AxiosError for safe access
+            const errorMessage = (axiosError.response?.data as { message?: string })?.message  || 'An error occurred';
+            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
