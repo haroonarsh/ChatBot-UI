@@ -13,9 +13,10 @@ interface LoginFormProps {
     onSubmit: (data: { email: string; password: string }) => void;
     loading: boolean;
     error?: string | null;
+    isRegister?: boolean;
 }
 
-export default function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
+export default function LoginForm({ onSubmit, loading, error, isRegister }: LoginFormProps) {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
