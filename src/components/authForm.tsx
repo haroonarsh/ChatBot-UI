@@ -13,6 +13,8 @@ import Link from "next/link"
 interface AuthFormProps {
   onSubmit: (data: { name: string; email: string; password: string; }) => void;
   loading: boolean;
+  error?: string | null;
+  isRegister?: boolean;
 }
 
 export default function AuthForm({ onSubmit, loading }: AuthFormProps) {
