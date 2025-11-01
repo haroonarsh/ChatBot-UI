@@ -15,7 +15,7 @@ export const setToken = (token: string): void => {
             maxAge: 60 * 60 * 24 * 7, // 7 days
             path: '/',
             sameSite: 'lax', // send cookie both same-site and cross-site requests
-            secure: process.env.NODE_ENV === 'development',
+            secure: process.env.NODE_ENV === 'production',
         });
     } catch (error: unknown) {
         console.error('Error setting token cookie:', error);
