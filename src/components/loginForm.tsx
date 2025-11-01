@@ -12,9 +12,10 @@ import Link from "next/link"
 interface LoginFormProps {
     onSubmit: (data: { email: string; password: string }) => void;
     loading: boolean;
+    error?: string | null;
 }
 
-export default function LoginForm({ onSubmit, loading }: LoginFormProps) {
+export default function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
